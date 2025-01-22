@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router";
 import { Button } from "../ui/button";
-import { SVGProps } from "react";
+import { SVGProps, useEffect } from "react";
 import { JSX } from "react/jsx-runtime";
 import { ShoppingBagIcon } from "lucide-react";
 import {
@@ -28,15 +28,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useCreateOrderMutation } from "@/redux/services/order/order";
+import { toast } from "sonner";
 
 const CartSheet = () => {
   const dispatch = useAppDispatch();
 
   const cartData = useAppSelector((state) => state.cart);
 
-  const handlePlaceOrder = () => {
-    console.log(cartData);
+  const [createOrder, { isLoading, isSuccess, data, isError, error }] =
+    useCreateOrderMutation();
+
+  const handlePlaceOrder = async () => {
+    await createOrder({ products: cartData.items });
   };
+
+  const toastId = "cart";
+  useEffect(() => {
+    if (isLoading) toast.loading("Processing ...", { id: toastId });
+
+    if (isSuccess) {
+      toast.success(data?.message, { id: toastId });
+      if (data?.data) {
+        setTimeout(() => {
+          window.location.href = data.data;
+        }, 1000);
+      }
+    }
+
+    if (isError) toast.error(JSON.stringify(error), { id: toastId });
+  }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
 
   return (
     <Sheet>
