@@ -5,7 +5,6 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 
 const createOrder = async (
-  client_ip: string,
   user: IUser,
   payload: { products: { product: string; quantity: number }[] }
 ) => {
@@ -35,9 +34,12 @@ const createOrder = async (
   return { order };
 };
 
+const getOrders = async () => {};
+
 const verifyPayment = async (sp_trxn_id: string) => {};
 
 export const orderService = {
   createOrder,
+  getOrders,
   verifyPayment,
 };

@@ -5,11 +5,7 @@ import httpStatus from "http-status";
 
 const createOrder = catchAsync(async (req, res) => {
   const user = req.user;
-  const order = await orderService.createOrder(
-    req.ip as string,
-    user,
-    req.body
-  );
+  const order = await orderService.createOrder(user, req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
