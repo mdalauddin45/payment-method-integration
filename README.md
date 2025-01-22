@@ -1,98 +1,136 @@
+````markdown
 # Payment Method Integration (Shurjopay)
 
-This repository demonstrates the integration of the **Shurjopay** payment gateway with separate **backend** and **frontend** implementations. It provides a step-by-step guide to integrating Shurjopay into your applications.
+This repository demonstrates the integration of the **Shurjopay** payment gateway with separate **backend** and **frontend** implementations. It provides a comprehensive guide to integrating Shurjopay into your applications seamlessly.
 
 ---
 
 ## Features
 
-- Backend API for payment initiation and callback handling.
-- Frontend interface to initiate payments and display statuses.
-- Environment-based configuration for seamless development and production.
-- Detailed folder structure for scalability and clarity.
+- **Backend API** for initiating payments and handling callbacks.
+- **Frontend interface** to initiate payments and display transaction statuses.
+- Environment-based configurations for streamlined development and production.
+- Clear and scalable folder structure.
 
 ---
 
 ## Prerequisites
 
-Before starting, ensure you have the following:
+Ensure you have the following before starting:
 
-1. **Shurjopay** merchant account with API credentials.
-2. Node.js (v14 or later) installed.
-3. Package managers like `npm` or `yarn`.
-4. A modern web browser for frontend testing.
+1. **Shurjopay** merchant account and API credentials.
+2. [Node.js](https://nodejs.org/) (v14 or later) installed.
+3. Package manager like `npm` or `yarn`.
+4. A modern web browser for testing the frontend.
 
 ---
 
 ## Getting Started
 
-### 1. Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/Apollo-Level2-Web-Dev/payment-method-integration.git
 cd payment-method-integration
+```
+````
 
-Backend Setup
+---
 
-1. Navigate to the Backend Directory
+## Backend Setup
 
-cd backend
+1. **Navigate to the Backend Directory**
 
-2. Install Dependencies
+   ```bash
+   cd backend
+   ```
 
-npm install
+2. **Install Dependencies**
 
-3. Configure Environment Variables
+   ```bash
+   npm install
+   ```
 
-Create a .env file in the backend directory and add your Shurjopay credentials:
+3. **Configure Environment Variables**
 
-SHURJOPAY_API_URL=<your-api-url>
-MERCHANT_USERNAME=<your-username>
-MERCHANT_PASSWORD=<your-password>
-RETURN_URL=<frontend-url>/payment-success
-CANCEL_URL=<frontend-url>/payment-cancel
-PORT=5000
+   Create a `.env` file in the `backend` directory and add the following variables:
 
-4. Run the Backend Server
+   ```
+   PORT=4000
+   DATABASE_URL="<Mongodb DATABASE_URL>"
 
-npm start
+   JWT_ACCESS_SECRET=verysecret
+   JWT_REFRESH_SECRET=veryverysecret
+   JWT_ACCESS_EXPIRES_IN=7d
+   JWT_REFRESH_EXPIRES_IN=365d
 
-The backend will run on http://localhost:5000.
+   SP_ENDPOINT=https://sandbox.shurjopayment.com
+   SP_USERNAME=sp_sandbox
+   SP_PASSWORD=pyyk97hu&6u6
+   SP_PREFIX=SP
+   SP_RETURN_URL=http://localhost:5173/order/verification
+   ```
 
-Frontend Setup
+4. **Run the Backend Server**
 
-1. Navigate to the Frontend Directory
+   ```bash
+   npm start
+   ```
 
-cd frontend
+   The backend will run at `http://localhost:4000`.
 
-2. Install Dependencies
+---
 
-npm install
+## Frontend Setup
 
-3. Configure Environment Variables
+1. **Navigate to the Frontend Directory**
 
-Create a .env file in the frontend directory:
+   ```bash
+   cd frontend
+   ```
 
-REACT_APP_API_URL=http://localhost:5000
+2. **Install Dependencies**
 
-4. Run the Frontend Application
+   ```bash
+   npm install
+   ```
 
-npm start
+3. **Configure Environment Variables**
 
-The frontend will run on http://localhost:3000.
+   Create a `.env` file in the `frontend` directory and add the following variable:
 
-Folder Structure
+   ```
+   Vite_APP_API_URL=http://localhost:4000/api/v1
+   ```
 
-Root Directory
+4. **Run the Frontend Application**
 
+   ```bash
+   npm start
+   ```
+
+   The frontend will run at `http://localhost:5173`.
+
+---
+
+## Folder Structure
+
+### Root Directory
+
+```
 .
 ├── backend/               # Backend API and logic
 ├── frontend/              # Frontend user interface
 ├── README.md              # Project documentation
 └── .gitignore             # Git ignore rules
 
-Backend Folder Structure
+```
 
+---
+
+### Backend Folder Structure
+
+```
 backend/
 ├── src/
 │   ├── app/
@@ -104,8 +142,8 @@ backend/
 │   │   │   ├── payment/     # Shurjopay-specific logic
 │   │   │   │   ├── controller/  # Payment controllers for handling API requests
 │   │   │   │   ├── router/       # Route definitions for payment-related endpoints
-│   │   │   │   ├── service/     # Business logic and interaction with Shurjopay API
-│   │   │   │   └── model/       # Mongoose models or database schemas if needed
+│   │   │   │   ├── service/      # Business logic and interaction with Shurjopay API
+│   │   │   │   └── model/        # Mongoose models or database schemas if needed
 │   │   ├── utils/           # Helper functions and utilities (e.g., logging, error handling)
 │   │   └── app.ts           # Main Express app configuration and initialization
 │   └── server.ts            # Server initialization and entry point
@@ -113,22 +151,47 @@ backend/
 ├── package.json             # Node.js dependencies
 └── tsconfig.json            # TypeScript configuration
 
-Frontend Folder Structure
+```
 
+---
+
+### Frontend Folder Structure
+
+```
 frontend/
 ├── public/                # Public assets
 ├── src/
 │   ├── components/        # Reusable UI components
 │   ├── pages/             # Application pages (e.g., Payment, Success)
-│   ├── services/          # API calls to backend
+│   ├── services/          # API calls to the backend
 │   ├── App.tsx            # Main App component
 │   ├── index.tsx          # Entry point for React
 ├── .env                   # Environment variables
 ├── package.json           # Node.js dependencies
 └── tsconfig.json          # TypeScript configuration
 
+```
 
-Payment Callback
+---
 
-Shurjopay will send transaction details to the RETURN_URL and CANCEL_URL specified in the .env file.
+## Payment Callback
+
+The Shurjopay gateway sends transaction details to the **`RETURN_URL`** and **`CANCEL_URL`** specified in the `.env` file. Ensure these endpoints are correctly implemented in the backend to handle the responses.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](https://chatgpt.com/c/LICENSE) file for details.
+
+---
+
+## Contact
+
+For any questions or assistance, feel free to open an issue in the repository's [Issues](https://github.com/Apollo-Level2-Web-Dev/payment-method-integration/issues) section.
+
+```
+
+This version improves readability, organizes information clearly, and includes all relevant details for both backend and frontend setups. Let me know if you need further customizations!
+
 ```
