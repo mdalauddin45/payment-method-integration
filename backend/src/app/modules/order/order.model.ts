@@ -30,14 +30,6 @@ const OrderSchema = new Schema<IOrder>(
       enum: ["Pending", "Paid", "Shipped", "Completed", "Cancelled"],
       default: "Pending",
     },
-    transaction: {
-      id: String,
-      code: Number,
-      message: String,
-      status: String,
-      method: String,
-      date_time: String,
-    },
   },
   {
     timestamps: true,

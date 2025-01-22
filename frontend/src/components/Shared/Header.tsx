@@ -19,6 +19,15 @@ import {
   removeFromCart,
   updateQuantity,
 } from "@/redux/services/cart/cartSlice";
+import { logout, selectCurrentUser } from "@/redux/services/auth/authSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const CartSheet = () => {
   const dispatch = useAppDispatch();
@@ -139,6 +148,10 @@ const CartSheet = () => {
 };
 
 export default function Header() {
+  const dispatch = useAppDispatch();
+
+  const user = useAppSelector(selectCurrentUser);
+
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8">
       <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
@@ -157,20 +170,36 @@ export default function Header() {
               Order
             </Button>
           </Link>
-          <CartSheet />;
-          <NavLink to="/register">
-            <Button variant="link" className=" px-2 py-1 text-xs">
-              Sign Up
-            </Button>
-          </NavLink>
-          <NavLink to="/login">
-            <Button
-              variant="link"
-              className="justify-self-end px-2 py-1 text-xs"
-            >
-              Sign In
-            </Button>
-          </NavLink>
+          <CartSheet />
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>{user.email}</DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>{user.role}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => dispatch(logout())}>
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <NavLink to="/register">
+                <Button variant="link" className=" px-2 py-1 text-xs">
+                  Sign Up
+                </Button>
+              </NavLink>
+              <NavLink to="/login">
+                <Button
+                  variant="link"
+                  className="justify-self-end px-2 py-1 text-xs"
+                >
+                  Sign In
+                </Button>
+              </NavLink>
+            </>
+          )}
         </div>
       </header>
     </div>
