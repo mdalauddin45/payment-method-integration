@@ -1,19 +1,12 @@
 import { Navigate, Outlet } from "react-router";
 import Header from "../Shared/Header";
 import { useAppSelector } from "@/redux/hooks";
-import { useCurrentToken } from "@/redux/services/auth/authSlice";
-import { jwtDecode } from "jwt-decode";
+import { selectCurrentUser } from "@/redux/services/auth/authSlice";
 
 const AuthLayout = () => {
-  const token = useAppSelector(useCurrentToken);
+  const user = useAppSelector(selectCurrentUser);
 
-  let user;
-
-  if (token) {
-    user = jwtDecode(token);
-  }
-
-  if (!token || !user?.exp) {
+  if (!user || !user?.exp) {
     return <Navigate to="/login" replace={true} />;
   }
 
