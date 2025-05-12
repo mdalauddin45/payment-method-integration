@@ -22,7 +22,8 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.5",
-    "shurjopay": "^0.12.1"
+    "shurjopay": "^0.12.1",
+    "typescript": "^5.7.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
